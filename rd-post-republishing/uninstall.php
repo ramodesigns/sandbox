@@ -31,7 +31,11 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 }
 
 global $wpdb;
-$table_name = $wpdb->prefix . 'rd_republishing_data';
 
-// Delete the custom table.
-$wpdb->query( "DROP TABLE IF EXISTS $table_name" );
+// Delete the data table.
+$data_table_name = $wpdb->prefix . 'rd_republishing_data';
+$wpdb->query( "DROP TABLE IF EXISTS $data_table_name" );
+
+// Delete the settings table.
+$settings_table_name = $wpdb->prefix . 'rd_republishing_settings';
+$wpdb->query( "DROP TABLE IF EXISTS $settings_table_name" );
