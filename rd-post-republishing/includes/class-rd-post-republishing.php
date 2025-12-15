@@ -78,6 +78,7 @@ class Rd_Post_Republishing {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
+		$this->define_api_hooks();
 
 	}
 
@@ -121,6 +122,16 @@ class Rd_Post_Republishing {
 		 * side of the site.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-rd-post-republishing-public.php';
+
+		/**
+		 * The class responsible for defining REST API endpoints for the data table.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-rd-post-republishing-data-api.php';
+
+		/**
+		 * The class responsible for defining REST API endpoints for the settings table.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-rd-post-republishing-settings-api.php';
 
 		$this->loader = new Rd_Post_Republishing_Loader();
 
@@ -172,6 +183,19 @@ class Rd_Post_Republishing {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+
+	}
+
+	/**
+	 * Register all of the REST API endpoint classes.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function define_api_hooks() {
+
+		new Rd_Post_Republishing_Data_Api();
+		new Rd_Post_Republishing_Settings_Api();
 
 	}
 
